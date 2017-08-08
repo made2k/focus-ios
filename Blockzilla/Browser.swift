@@ -13,6 +13,7 @@ protocol BrowserDelegate: class {
     func browser(_ browser: Browser, didUpdateCanGoForward canGoForward: Bool)
     func browser(_ browser: Browser, didUpdateEstimatedProgress estimatedProgress: Float)
     func browser(_ browser: Browser, didUpdateURL url: URL?)
+    func browser(_ browser: Browser, didLongPressImage path: String)
     func browser(_ browser: Browser, shouldStartLoadWith request: URLRequest) -> Bool
     func browser(_ browser: Browser, scrollViewWillBeginDragging scrollView: UIScrollView)
     func browser(_ browser: Browser, scrollViewDidEndDragging scrollView: UIScrollView)
@@ -56,8 +57,11 @@ class Browser: NSObject {
         swipeLeftRecognizer.direction = .left
         let swipeRightRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(goBackByGesture))
         swipeRightRecognizer.direction = .right
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(detectLongPressOnImage))
+
         webView.addGestureRecognizer(swipeLeftRecognizer)
         webView.addGestureRecognizer(swipeRightRecognizer)
+        webView.addGestureRecognizer(longPressRecognizer)
         view.addSubview(webView)
 
         webView.snp.makeConstraints { make in
@@ -94,6 +98,21 @@ class Browser: NSObject {
     func goForwardByGesture() {
         Telemetry.default.recordEvent(category: TelemetryEventCategory.action, method: TelemetryEventMethod.swipeToNavigateForward, object: TelemetryEventObject.app)
         goForward()
+    }
+
+    func detectLongPressOnImage(sender: UILongPressGestureRecognizer) {
+        webView?.isUserInteractionEnabled = sender.state != .began
+        guard sender.state == .began else { return }
+
+        let touchPoint = sender.location(in: webView)
+        let tagName = "document.elementFromPoint(\(touchPoint.x), \(touchPoint.y)).tagName"
+        let src = "document.elementFromPoint(\(touchPoint.x), \(touchPoint.y)).src"
+        let isImage = webView?.stringByEvaluatingJavaScript(from: tagName).map({ $0 == "IMG" }) ?? false
+
+        guard isImage,
+            let path = webView?.stringByEvaluatingJavaScript(from: src) else { return }
+
+        delegate?.browser(self, didLongPressImage: path)
     }
 
     func goBack() {
