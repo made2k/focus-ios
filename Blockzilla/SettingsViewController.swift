@@ -225,6 +225,19 @@ class SettingsViewController: UIViewController, UITableViewDataSource, UITableVi
             make.centerY.equalTo(cell.textLabel!).offset(10)
         }
 
+
+        let footer = UIView()
+        footer.backgroundColor = UIConstants.colors.background
+
+        cell.addSubview(footer)
+
+        footer.snp.makeConstraints { make in
+            make.height.equalTo(1)
+            make.bottom.equalToSuperview().offset(1)
+            make.leading.trailing.equalToSuperview()
+        }
+
+
         return cell
     }
 
