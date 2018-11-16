@@ -10,6 +10,21 @@
 <Url type="text/html" method="GET" template="https://duckduckgo.com/">
   <Param name="q" value="{searchTerms}"/>
   <Param name="t" value="ffocus"/>
+  <Param name="kae" value="d"/>
+  <Param name="kax" value="-1"/>
+  <Param name="kl" value="us-en"/>
+  <Param name="kp" value="-2"/>
+  <Param name="kav" value="1"/>
+  <Param name="kaj" value="u"/>
+  <Param name="kak" value="-1"/>
+  <Param name="kaq" value="-1"/>
+  <Param name="kap" value="-1"/>
+  <Param name="kao" value="-1"/>
+  <Param name="kau" value="-1"/>
+  <Param name="kh" value="1"/>
+  <Param name="kg" value="p"/>
+  <Param name="ia" value="web"/>
+  <Param name="kam" value="osm"/>
 </Url>
 <Url type="application/x-moz-tabletsearch" method="GET" template="https://duckduckgo.com/">
   <Param name="q" value="{searchTerms}"/>
