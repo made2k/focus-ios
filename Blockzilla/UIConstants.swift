@@ -279,6 +279,8 @@ struct UIConstants {
         static let labelBlockSocialDescription = NSLocalizedString("Settings.toggleBlockSocialDescription", value: "Embedded on sites to track your visits and to display functionality like share buttons", comment: "Description for 'Block social Trackers'")
         static let labelBlockOther = NSLocalizedString("Settings.toggleBlockOther", value: "Block other content trackers", comment: "Label for toggle on main screen")
         static let labelBlockOtherDescription = NSLocalizedString("Settings.toggleBlockOtherDescription", value: "Enabling may cause some pages to behave unexpectedly", comment: "Description for 'Block other content Trackers'")
+        static let labelBlockAdguard = NSLocalizedString("Settings.toggleBlockAdguard", value: "Block page elements and trackers", comment: "Label for toggle on main screen")
+        static let labelBlockAdguardDescription = NSLocalizedString("Settings.toggleBlockAdguardDescription", value: "Enabling may cause some pages to behave unexpectedly", comment: "Description for 'Block adguard content Trackers'")
         static let labelBlockFonts = NSLocalizedString("Settings.toggleBlockFonts", value: "Block Web fonts", comment: "Label for toggle on main screen")
         static let labelSendAnonymousUsageData = NSLocalizedString("Settings.toggleSendUsageData", value: "Send usage data", comment: "Label for Send Usage Data toggle on main screen")
         static let detailTextSendUsageData = NSLocalizedString("Settings.detailTextSendUsageData", value: "Mozilla strives to collect only what we need to provide and improve %@ for everyone.", comment: "Description associated to the Send Usage Data toggle on main screen. %@ is the app name (Focus/Klar)")

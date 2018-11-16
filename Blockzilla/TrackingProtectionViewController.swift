@@ -14,7 +14,8 @@ class TrackingProtectionViewController: UIViewController, UITableViewDataSource,
         BlockerToggle(label: UIConstants.strings.labelBlockAds, setting: SettingsToggle.blockAds, subtitle: UIConstants.strings.labelBlockAdsDescription),
         BlockerToggle(label: UIConstants.strings.labelBlockAnalytics, setting: SettingsToggle.blockAnalytics, subtitle: UIConstants.strings.labelBlockAnalyticsDescription),
         BlockerToggle(label: UIConstants.strings.labelBlockSocial, setting: SettingsToggle.blockSocial, subtitle: UIConstants.strings.labelBlockSocialDescription),
-        BlockerToggle(label: UIConstants.strings.labelBlockOther, setting: SettingsToggle.blockOther, subtitle: UIConstants.strings.labelBlockOtherDescription)
+        BlockerToggle(label: UIConstants.strings.labelBlockOther, setting: SettingsToggle.blockOther, subtitle: UIConstants.strings.labelBlockOtherDescription),
+        BlockerToggle(label: UIConstants.strings.labelBlockAdguard, setting: SettingsToggle.blockAdguard, subtitle: UIConstants.strings.labelBlockAdguardDescription)
     ]
 
     override func viewDidLoad() {
@@ -57,18 +58,26 @@ class TrackingProtectionViewController: UIViewController, UITableViewDataSource,
         }
 
         switch toggle.setting {
-        case .blockOther where sender.isOn:
-            let alertController = UIAlertController(title: nil, message: UIConstants.strings.settingsBlockOtherMessage, preferredStyle: .alert)
-            alertController.addAction(UIAlertAction(title: UIConstants.strings.settingsBlockOtherNo, style: .default) { _ in
-                sender.isOn = false
-                updateSetting()
-            })
-            alertController.addAction(UIAlertAction(title: UIConstants.strings.settingsBlockOtherYes, style: .destructive) { _ in
-                updateSetting()
-            })
-            alertController.popoverPresentationController?.sourceView = sender
-            alertController.popoverPresentationController?.sourceRect = sender.bounds
-            present(alertController, animated: true, completion: nil)
+        case .blockAdguard where sender.isOn:
+            // Disable non adguard
+            let nonAdguardToggles = toggles.filter { $0.toggle != sender }
+            nonAdguardToggles.forEach { $0.toggle.setOn(false, animated: true) }
+            nonAdguardToggles.forEach { Settings.set(false, forToggle: $0.setting) }
+            
+            updateSetting()
+            
+        case .blockAds where sender.isOn,
+             .blockOther where sender.isOn,
+             .blockSocial where sender.isOn,
+             .blockAnalytics where sender.isOn:
+            
+            // Disable adguard
+            let adguardToggle = toggles.filter { $0.setting == .blockAdguard }.first!
+            adguardToggle.toggle.setOn(false, animated: true)
+            Settings.set(false, forToggle: adguardToggle.setting)
+            
+            updateSetting()
+            
         default:
             updateSetting()
         }

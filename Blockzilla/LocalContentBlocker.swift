@@ -4,6 +4,7 @@
 
 import Foundation
 import WebKit
+import PromiseKit
 
 class ContentBlockerHelper {
     static let shared = ContentBlockerHelper()
@@ -16,6 +17,17 @@ class ContentBlockerHelper {
     }
 
     func getBlockLists(callback: @escaping ([WKContentRuleList]) -> Void) {
+        
+        if Settings.getToggle(SettingsToggle.blockAdguard) {
+            firstly {
+                getAdguardLists()
+                
+            }.done {
+                callback($0)
+            }.cauterize()
+            return
+        }
+        
         let enabledList = Utils.getEnabledLists()
         var returnList = [WKContentRuleList]()
         let dispatchGroup = DispatchGroup()
@@ -40,6 +52,10 @@ class ContentBlockerHelper {
         dispatchGroup.notify(queue: .global()) {
             callback(returnList)
         }
+    }
+    
+    private func getAdguardLists() -> Promise<[WKContentRuleList]> {
+        return AdguardLoader.shared.getLists()
     }
 
     private static func compileItem(item: String, callback: @escaping (WKContentRuleList) -> Void) {
