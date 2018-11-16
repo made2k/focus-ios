@@ -1,0 +1,19 @@
+
+<!-- This Source Code Form is subject to the terms of the Mozilla Public
+ - License, v. 2.0. If a copy of the MPL was not distributed with this
+ - file, You can obtain one at http://mozilla.org/MPL/2.0/. -->
+
+<SearchPlugin xmlns="http://www.mozilla.org/2006/browser/search/">
+  <ShortName>StartPage</ShortName>
+  <InputEncoding>UTF-8</InputEncoding>
+  <Image width="48" height="48">data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAABRUlEQVRoge2QLU/DUBhG7w9BVJE0SCyKUMvcHJmhgrCEUASdQTDEplBk2R9oMoGcJCHBTBFUxQSIBdeAbWZexNLu3ruNfXTLkybPTY7s+5xT5d+IlBmFFmAAWoABaAEGoAUYgBZgAFqAAWgBBqAFGIAWYABagAFoAWjAebB7lgasc+QyNLm+M7l9KI590960f6DShx+7E6LnCW8Dk3g4ZfQ9S/KzHey7+m48NJ2UPpymYynbU2iBog8akKbjnCT5zfn8Ghm8f8Q5L68Dg0IB9rg+lg1Evb5Evb48dSNptjrSbHUkCNtycXUvNb8hNb8hlWpdKtW6HJ2cGRwcni7EcT1xXG82QJfKhHSZTCQI23PH5404rid7+8cro3+3DLVIyhZaRWSd4W2h/pNCCG0UUGYYgIYBaBiAhgFoGICGAWgYgKb0AX9JbOasJ4PxxAAAAABJRU5ErkJggg==</Image>
+  <Url type="application/x-suggestions+json" method="GET" template="https://new.startpage.com/do/suggest?limit=10&lang=english&format=json&query={searchTerms}"/>
+  <Url type="text/html" method="POST" template="https://new.startpage.com/do/search">
+    <Param name="query" value="{searchTerms}"/>
+    <Param name="cmd" value="process_search"/>
+    <Param name="language" value="english"/>
+    <Param name="t" value="dark"/>
+    <Param name="prfe" value="36c84513558a2d34bf0d89ea505333ad25eaad7546bb0b480c1c89932309a9bc5065027ac0acf3043d613d424aeb80bb"/>
+  </Url>
+  <SearchForm>https://new.startpage.com/</SearchForm>
+</SearchPlugin>
