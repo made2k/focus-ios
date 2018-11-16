@@ -6,7 +6,7 @@
 	<true/>
 	<key>com.apple.security.application-groups</key>
 	<array>
-		<string>group.org.mozilla.ios.Klar</string>
+		<string>group.com.zachmcgaughey.adguard</string>
 	</array>
 </dict>
 </plist>
